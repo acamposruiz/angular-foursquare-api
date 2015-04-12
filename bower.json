@@ -1,0 +1,26 @@
+{
+  "name": "angular-foursquare-api",
+  "main": "anfour.js",
+  "version": "0.0.0",
+  "homepage": "https://github.com/acamposruiz/angular-foursquare-api",
+  "authors": [
+    "Antonio Campos <acamposruiz@gmail.com>"
+  ],
+  "description": "Angular module that provide an interface to make calls to foursquare API",
+  "keywords": [
+    "angular",
+    "foursquare",
+    "api"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "anfour": "*"
+  }
+}

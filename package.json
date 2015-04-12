@@ -1,0 +1,27 @@
+{
+  "name": "angular-foursquare-api",
+  "version": "0.0.0",
+  "description": "Angular factories to get foursquare API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/acamposruiz/angular-foursquare-api.git"
+  },
+  "keywords": [
+    "angular",
+    "foursquare",
+    "API"
+  ],
+  "dependencies": {
+    "angular": "^1.3.0"
+  },
+  "author": "Antonio Campos <acamposruiz@gmail.com> (https://github.com/acamposruiz)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/acamposruiz/angular-foursquare-api/issues"
+  },
+  "homepage": "https://github.com/acamposruiz/angular-foursquare-api"
+}
