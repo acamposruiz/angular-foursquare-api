@@ -1,34 +1,14 @@
 /**
  * Created by Antonio on 11/04/15.
  */
-angular.module('angular-foursquare-api', [])
+angular.module('angular-foursquare-api', ['angular-googlemaps'])
     .constant("SECTIONS",{
         "all": ['food', 'drinks', 'coffee', 'shops', 'arts', 'outdoors', 'sights', 'trending', 'specials', 'topPicks']
     })
-    .factory('getVenues', function($http, $q, SECTIONS) {
+    .factory('getVenues', function($http, $q, SECTIONS, addressFromCoordinates) {
         'use strict';
-        var client_id = 'WU3OIROB5N3J1U3JPWWP0EUVICAZTMDCL2MUFLM2RKZ4HZFO';
-        var client_secret = 'YF3BCWYDRXLSRUOSJ24WDBKWFZMYDGS1EYF5TSHM2O35VACU';
         var apiVersion = '20150217';
-        var addressFromCoordinates = function(latlng) {
-            var deferred = $q.defer();
-            $http({
-                url: 'http://maps.googleapis.com/maps/api/geocode/json',
-                params: {
-                    sensor: 'true_or_false',
-                    latlng: latlng
-                },
-                method: 'GET',
-                headers: angular.extend({
-                    'X-Requested-With': undefined
-                })
-            }).
-                success(function(data){
-                    deferred.resolve(data);
-                });
-            return deferred.promise;
-        };
-        var coordinatesFromAddress = function(address, section) {
+        var coordinatesFromAddress = function(address, section, ids) {
             var deferred = $q.defer();
             $http({
                 url: 'http://maps.googleapis.com/maps/api/geocode/json',
@@ -45,7 +25,8 @@ angular.module('angular-foursquare-api', [])
                 success(function(data){
                     deferred.resolve({
                         coordinates: data.results[0].geometry.location.lat + ',' + data.results[0].geometry.location.lng,
-                        section:section
+                        section:section,
+                        ids: ids
                     });
                 });
             return deferred.promise;
@@ -55,8 +36,8 @@ angular.module('angular-foursquare-api', [])
             $http({
                 url: 'https://api.foursquare.com/v2/venues/explore',
                 params: {
-                    client_id: client_id,
-                    client_secret: client_secret,
+                    client_id:  data.ids.client_id,
+                    client_secret:  data.ids.client_secret,
                     ll: data.coordinates,
                     section: data.section,
                     venuePhotos: 1,
@@ -77,10 +58,10 @@ angular.module('angular-foursquare-api', [])
         };
 
         return{
-            get: function(address, section){
-                return coordinatesFromAddress(address, section).then(venuesFromCoordinates);
+            get: function(address, section, ids){
+                return coordinatesFromAddress(address, section, ids).then(venuesFromCoordinates);
             },
-            defaultSearch: function(scope, callback){
+            defaultSearch: function(scope, callback, ids){
                 navigator.geolocation.getCurrentPosition(GetLocation);
                 function GetLocation(location) {
                     addressFromCoordinates(location.coords.latitude + ',' + location.coords.longitude).then(function(data){
@@ -88,7 +69,8 @@ angular.module('angular-foursquare-api', [])
                     });
                     venuesFromCoordinates({
                         coordinates: location.coords.latitude + ',' + location.coords.longitude,
-                        section: SECTIONS.all[0]
+                        section: SECTIONS.all[0],
+                        ids: ids
                     }).then(callback);
                 }
             }
