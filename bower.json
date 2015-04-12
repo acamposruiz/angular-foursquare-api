@@ -1,6 +1,6 @@
 {
   "name": "angular-foursquare-api",
-  "main": "anfour.js",
+  "main": "angular-foursquare-api.js",
   "version": "0.0.0",
   "homepage": "https://github.com/acamposruiz/angular-foursquare-api",
   "authors": [
@@ -20,7 +20,5 @@
     "test",
     "tests"
   ],
-  "dependencies": {
-    "anfour": "*"
-  }
+  "dependencies": {}
 }
