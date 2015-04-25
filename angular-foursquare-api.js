@@ -60,17 +60,6 @@ angular.module('angular-foursquare-api', ['angular-googlemaps'])
             get: function(address, section){
                 return coordinatesFromAddress(address, section).then(venuesFromCoordinates);
             },
-            defaultSearch: function(scope, callback){
-                navigator.geolocation.getCurrentPosition(GetLocation);
-                function GetLocation(location) {
-                    addressFromCoordinates(location.coords.latitude + ',' + location.coords.longitude).then(function(data){
-                        scope.address = data.results[0].formatted_address;
-                    });
-                    venuesFromCoordinates({
-                        coordinates: location.coords.latitude + ',' + location.coords.longitude,
-                        section: SECTIONS.all[0]
-                    }).then(callback);
-                }
-            }
+            venuesFromCoordinates: venuesFromCoordinates
         };
     })
