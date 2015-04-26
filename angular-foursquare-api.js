@@ -5,7 +5,7 @@ angular.module('angular-foursquare-api', ['angular-googlemaps'])
     .constant("SECTIONS",{
         "all": ['food', 'drinks', 'coffee', 'shops', 'arts', 'outdoors', 'sights', 'trending', 'specials', 'topPicks']
     })
-    .factory('getVenues', function($http, $q, coordinatesFromAddress, angular_foursquare_conf) {
+    .factory('venuesFromCoordinates', function($http, $q, angular_foursquare_conf) {
         'use strict';
         var apiVersion = '20150217';
         var venuesFromCoordinates = function(data) {
@@ -35,10 +35,14 @@ angular.module('angular-foursquare-api', ['angular-googlemaps'])
             return deferred.promise;
         };
 
-        return{
-            get: function(address, section){
-                return coordinatesFromAddress(address, section).then(venuesFromCoordinates);
-            },
-            venuesFromCoordinates: venuesFromCoordinates
+        return venuesFromCoordinates;
+    })
+    .factory('getVenues', function(coordinatesFromAddress, venuesFromCoordinates) {
+        'use strict';
+
+        var getVenues = function(address, section){
+            return coordinatesFromAddress(address, section).then(venuesFromCoordinates);
         };
+
+        return getVenues;
     })
