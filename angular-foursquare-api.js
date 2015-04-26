@@ -5,31 +5,9 @@ angular.module('angular-foursquare-api', ['angular-googlemaps'])
     .constant("SECTIONS",{
         "all": ['food', 'drinks', 'coffee', 'shops', 'arts', 'outdoors', 'sights', 'trending', 'specials', 'topPicks']
     })
-    .factory('getVenues', function($http, $q, SECTIONS, addressFromCoordinates, angular_foursquare_conf) {
+    .factory('getVenues', function($http, $q, coordinatesFromAddress, angular_foursquare_conf) {
         'use strict';
         var apiVersion = '20150217';
-        var coordinatesFromAddress = function(address, section) {
-            var deferred = $q.defer();
-            $http({
-                url: 'http://maps.googleapis.com/maps/api/geocode/json',
-                params: {
-                    address: address,
-                    components:'country:ES'
-                },
-                method: 'GET',
-                //data: data,
-                headers: angular.extend({
-                    'X-Requested-With': undefined
-                })
-            }).
-                success(function(data){
-                    deferred.resolve({
-                        coordinates: data.results[0].geometry.location.lat + ',' + data.results[0].geometry.location.lng,
-                        section:section
-                    });
-                });
-            return deferred.promise;
-        };
         var venuesFromCoordinates = function(data) {
             var deferred = $q.defer();
             $http({
@@ -42,6 +20,7 @@ angular.module('angular-foursquare-api', ['angular-googlemaps'])
                     venuePhotos: 1,
                     sortByDistance: 1,
                     radius: 300,
+                    limit: angular_foursquare_conf.limit,
                     v: apiVersion
                 },
                 method: 'GET',
