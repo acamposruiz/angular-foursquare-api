@@ -1,7 +1,7 @@
 {
   "name": "angular-foursquare-api",
   "main": "angular-foursquare-api.js",
-  "version": "0.0.43",
+  "version": "0.0.44",
   "homepage": "https://github.com/acamposruiz/angular-foursquare-api",
   "authors": [
     "Antonio Campos <acamposruiz@gmail.com>"
